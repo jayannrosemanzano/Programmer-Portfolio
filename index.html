@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Programming Portfolio</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-slate-950 text-white">
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const {
+    useState,
+    useEffect
+} = React;
+
+
+/* =========================
+   ICON COMPONENT
+========================= */
+
+const Icon = ({ name, size = 24, className = "" }) => {
+
+    useEffect(() => {
+
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+
+    });
+
+    return (
+        <i
+            data-lucide={name}
+            className={className}
+            style={{
+                width: size,
+                height: size
+            }}
+        ></i>
+    );
+};
+
+
+/* =========================
+   MAIN APP
+========================= */
+
+function App() {
+
+    const [activeSection, setActiveSection] = useState("home");
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        message: ""
+    });
+
+    const [submitted, setSubmitted] = useState(false);
+
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    const scrollToSection = (section) => {
+
+        setActiveSection(section);
+
+        const element = document.getElementById(section);
+
+        if (element) {
+            element.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    };
+
+
+    /* =========================
+       FORM
+    ========================= */
+
+    const handleChange = (e) => {
+
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+
+    };
+
+
+    const handleSubmit = (e) => {
+
+        e.preventDefault();
+
+        setSubmitted(true);
+
+        setFormData({
+            name: "",
+            email: "",
+            message: ""
+        });
+
+    };
+
+
+    /* =========================
+       NAVIGATION ITEMS
+    ========================= */
+
+    const navItems = [
+        ["home", "Home", "home"],
+        ["about", "About", "user"],
+        ["tech-stack", "Tech Stack", "code-2"],
+        ["education", "Education", "graduation-cap"],
+        ["projects", "Projects", "folder"],
+        ["contact", "Contact", "mail"]
+    ];
+
+
+    return (
+
+        <div className="min-h-screen">
+
+
+            {/* =========================
+               LEFT SIDEBAR NAVIGATION
+            ========================= */}
+
+            <nav className="fixed left-0 top-0 bottom-0 z-50 w-64 bg-slate-950 border-r border-slate-800 shadow-xl">
+
+                <div className="flex flex-col h-full">
+
+
+                    {/* LOGO */}
+
+                    <div className="p-6 border-b border-slate-800">
+
+                        <button
+                            onClick={() => scrollToSection("home")}
+                            className="text-2xl font-bold text-cyan-400 hover:text-cyan-300 transition"
+                        >
+                            MyPortfolio
+                        </button>
+
+                        <p className="text-slate-500 text-sm mt-2">
+                            Programmer Portfolio
+                        </p>
+
+                    </div>
+
+
+                    {/* NAVIGATION */}
+
+                    <div className="flex-1 px-4 py-6">
+
+                        <p className="text-xs uppercase tracking-wider text-slate-500 px-3 mb-4">
+                            Navigation
+                        </p>
+
+                        <div className="space-y-2">
+
+                            {navItems.map(([id, label, icon]) => (
+
+                                <button
+                                    key={id}
+                                    onClick={() => scrollToSection(id)}
+                                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
+                                        activeSection === id
+                                            ? "bg-cyan-500 text-slate-950 font-semibold"
+                                            : "text-slate-300 hover:bg-slate-800 hover:text-cyan-400"
+                                    }`}
+                                >
+
+                                    <Icon
+                                        name={icon}
+                                        size={20}
+                                    />
+
+                                    <span>
+                                        {label}
+                                    </span>
+
+                                </button>
+
+                            ))}
+
+                        </div>
+
+                    </div>
+
+
+                    {/* SIDEBAR BOTTOM */}
+
+                    <div className="p-6 border-t border-slate-800">
+
+                        <p className="text-xs text-slate-500 mb-2">
+                            Welcome to my portfolio
+                        </p>
+
+                        <p className="text-sm text-slate-400">
+                            Let's build something amazing.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+
+
+            {/* =========================
+               MAIN CONTENT
+            ========================= */}
+
+            <main className="ml-64">
+
+
+                {/* =========================
+                   HOME
+                ========================= */}
+
+                <section
+                    id="home"
+                    className="min-h-screen flex items-center justify-center px-6 pt-16"
+                >
+
+                    <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+
+                        {/* HOME TEXT */}
+
+                        <div>
+
+                            <p className="text-cyan-400 font-medium mb-3">
+                                Hello, I'm
+                            </p>
+
+                            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+                                Jay Ann Rose G. Manzano
+                            </h1>
+
+                            <h2 className="text-2xl md:text-3xl font-semibold text-slate-300 mb-6">
+                                “Believe in your potential, embrace the challenges, and keep moving forward.”
+                            </h2>
+
+                            <p className="text-slate-400 leading-relaxed mb-8">
+                                Welcome to my personal portfolio. I am passionate
+                                about technology, programming, and creating useful
+                                and creative digital experiences.
+                            </p>
+
+
+                            <div className="flex flex-wrap gap-4">
+
+                                <button
+                                    onClick={() => scrollToSection("projects")}
+                                    className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-semibold rounded-lg transition"
+                                >
+                                    View My Work
+                                </button>
+
+                                <button
+                                    onClick={() => scrollToSection("contact")}
+                                    className="px-6 py-3 border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-950 font-semibold rounded-lg transition"
+                                >
+                                    Contact Me
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* PROFILE PICTURE */}
+
+                        <div className="flex justify-center">
+
+                            <div className="relative">
+
+                                <div className="absolute inset-0 bg-cyan-500 rounded-full blur-3xl opacity-20"></div>
+
+                                <img
+                                    src="profile.jpg"
+                                    alt="Profile"
+                                    className="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-cyan-400 shadow-2xl"
+                                />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                {/* =========================
+                   ABOUT
+                ========================= */}
+
+                <section
+                    id="about"
+                    className="py-24 px-6 bg-slate-900"
+                >
+
+                    <div className="max-w-6xl mx-auto">
+
+                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                            About Me
+                        </h2>
+
+
+                        <div className="grid md:grid-cols-2 gap-12 items-center">
+
+                            <div>
+
+                                <p className="text-slate-300 leading-relaxed mb-6">
+                                    I am an aspiring programmer who enjoys learning
+                                    about web development and modern technologies.
+                                    I am continuously improving my programming skills
+                                    through projects, practice, and exploration.
+                                </p>
+
+                                <p className="text-slate-400 leading-relaxed">
+                                    My goal is to become a skilled developer who can
+                                    build websites and applications that are useful,
+                                    accessible, and enjoyable to use.
+                                </p>
+
+                            </div>
+
+
+                            <div className="grid grid-cols-2 gap-4">
+
+                                <div className="bg-slate-800 p-6 rounded-xl">
+
+                                    <Icon
+                                        name="code-2"
+                                        size={32}
+                                        className="text-cyan-400 mb-4"
+                                    />
+
+                                    <h3 className="font-bold text-lg mb-2">
+                                        Programming
+                                    </h3>
+
+                                    <p className="text-slate-400 text-sm">
+                                        Learning programming concepts and development.
+                                    </p>
+
+                                </div>
+
+
+                                <div className="bg-slate-800 p-6 rounded-xl">
+
+                                    <Icon
+                                        name="globe"
+                                        size={32}
+                                        className="text-cyan-400 mb-4"
+                                    />
+
+                                    <h3 className="font-bold text-lg mb-2">
+                                        Web Development
+                                    </h3>
+
+                                    <p className="text-slate-400 text-sm">
+                                        Creating responsive and modern websites.
+                                    </p>
+
+                                </div>
+
+
+                                <div className="bg-slate-800 p-6 rounded-xl">
+
+                                    <Icon
+                                        name="lightbulb"
+                                        size={32}
+                                        className="text-cyan-400 mb-4"
+                                    />
+
+                                    <h3 className="font-bold text-lg mb-2">
+                                        Creativity
+                                    </h3>
+
+                                    <p className="text-slate-400 text-sm">
+                                        Finding creative solutions to problems.
+                                    </p>
+
+                                </div>
+
+
+                                <div className="bg-slate-800 p-6 rounded-xl">
+
+                                    <Icon
+                                        name="book-open"
+                                        size={32}
+                                        className="text-cyan-400 mb-4"
+                                    />
+
+                                    <h3 className="font-bold text-lg mb-2">
+                                        Continuous Learning
+                                    </h3>
+
+                                    <p className="text-slate-400 text-sm">
+                                        Always learning new technologies and skills.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                {/* =========================
+                   TECH STACK
+                ========================= */}
+
+                <section
+                    id="tech-stack"
+                    className="py-24 px-6"
+                >
+
+                    <div className="max-w-6xl mx-auto">
+
+                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                            Tech Stack
+                        </h2>
+
+
+                        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+                            {[
+                                ["HTML", "Markup and website structure", "code-2"],
+                                ["CSS", "Styling and responsive layouts", "palette"],
+                                ["JavaScript", "Interactive web experiences", "braces"],
+                                ["React", "Component-based interfaces", "atom"],
+                                ["Tailwind CSS", "Modern utility-first styling", "wind"],
+                                ["Git & GitHub", "Version control and collaboration", "github"]
+                            ].map(([title, description, icon]) => (
+
+                                <div
+                                    key={title}
+                                    className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-cyan-400 transition"
+                                >
+
+                                    <Icon
+                                        name={icon}
+                                        size={36}
+                                        className="text-cyan-400 mb-4"
+                                    />
+
+                                    <h3 className="text-xl font-bold mb-2">
+                                        {title}
+                                    </h3>
+
+                                    <p className="text-slate-400">
+                                        {description}
+                                    </p>
+
+                                </div>
+
+                            ))}
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                {/* =========================
+                   EDUCATION
+                ========================= */}
+
+                <section
+                    id="education"
+                    className="py-24 px-6 bg-slate-900"
+                >
+
+                    <div className="max-w-6xl mx-auto">
+
+                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                            Education
+                        </h2>
+
+
+                        <div className="grid md:grid-cols-3 gap-6">
+
+
+                            {/* COLLEGE */}
+
+                            <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+
+                                <Icon
+                                    name="graduation-cap"
+                                    size={40}
+                                    className="text-cyan-400 mb-4"
+                                />
+
+                                <h3 className="text-xl font-bold mb-2">
+                                    College
+                                </h3>
+
+                                <p className="text-cyan-400 font-medium mb-2">
+                                    Bachelor of Science in Information Technology
+                                </p>
+
+                                <p className="text-slate-400">
+                                    Nueva Vizcaya State University
+                                </p>
+
+                            </div>
+
+
+                            {/* SENIOR HIGH SCHOOL */}
+
+                            <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+
+                                <Icon
+                                    name="school"
+                                    size={40}
+                                    className="text-cyan-400 mb-4"
+                                />
+
+                                <h3 className="text-xl font-bold mb-2">
+                                    Senior High School
+                                </h3>
+
+                                <p className="text-cyan-400 font-medium mb-2">
+                                    HUMMS
+                                </p>
+
+                                <p className="text-slate-400">
+                                    Ambaguio High School
+                                </p>
+
+                            </div>
+
+
+                            {/* JUNIOR HIGH SCHOOL */}
+
+                            <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+
+                                <Icon
+                                    name="book-open"
+                                    size={40}
+                                    className="text-cyan-400 mb-4"
+                                />
+
+                                <h3 className="text-xl font-bold mb-2">
+                                    Junior High School
+                                </h3>
+
+                                <p className="text-cyan-400 font-medium mb-2">
+                                    HUMMS
+                                </p>
+
+                                <p className="text-slate-400">
+                                    Ambaguio High school
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                {/* =========================
+                   PROJECTS
+                   YOUR ORIGINAL 3 PROJECTS
+                ========================= */}
+
+                <section
+                    id="projects"
+                    className="py-24 px-6"
+                >
+
+                    <div className="max-w-6xl mx-auto">
+
+                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                            My Projects
+                        </h2>
+
+
+                        <div className="grid md:grid-cols-3 gap-6">
+
+
+                            {/* PROJECT 1 - PORTFOLIO WEBSITE */}
+
+                            <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+
+                                <div className="h-40 bg-gradient-to-br from-cyan-500/30 to-blue-500/30 flex items-center justify-center">
+
+                                    <Icon
+                                        name="globe"
+                                        size={60}
+                                        className="text-cyan-400"
+                                    />
+
+                                </div>
+
+                                <div className="p-6">
+
+                                    <h3 className="text-xl font-bold mb-2">
+                                        Portfolio Website
+                                    </h3>
+
+                                    <p className="text-slate-400 mb-4">
+                                        A personal portfolio website showcasing my
+                                        skills, education, and projects.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            {/* PROJECT 2 - WEB PROJECT */}
+
+                            <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+
+                                <div className="h-40 bg-gradient-to-br from-purple-500/30 to-pink-500/30 flex items-center justify-center">
+
+                                    <Icon
+                                        name="layout-dashboard"
+                                        size={60}
+                                        className="text-cyan-400"
+                                    />
+
+                                </div>
+
+                                <div className="p-6">
+
+                                    <h3 className="text-xl font-bold mb-2">
+                                        BMI Calculator
+                                    </h3>
+
+                                    <p className="text-slate-400 mb-4">
+                                        A simple application that calculates BMI using height and weight.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            {/* PROJECT 3 - PROGRAMMING PROJECT */}
+
+                            <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+
+                                <div className="h-40 bg-gradient-to-br from-green-500/30 to-teal-500/30 flex items-center justify-center">
+
+                                    <Icon
+                                        name="code"
+                                        size={60}
+                                        className="text-cyan-400"
+                                    />
+
+                                </div>
+
+                                <div className="p-6">
+
+                                    <h3 className="text-xl font-bold mb-2">
+                                        HTML5 web Design
+                                    </h3>
+
+                                    <p className="text-slate-400 mb-4">
+                                        a simple web design about navigation bar/scroll html components.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                {/* =========================
+                   CONTACT
+                ========================= */}
+
+                <section
+                    id="contact"
+                    className="py-24 px-6 bg-slate-900"
+                >
+
+                    <div className="max-w-4xl mx-auto">
+
+                        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+                            Contact Me
+                        </h2>
+
+
+                        <div className="grid md:grid-cols-2 gap-12">
+
+
+                            <div>
+
+                                <h3 className="text-2xl font-bold mb-4">
+                                    Let's Connect
+                                </h3>
+
+                                <p className="text-slate-400 leading-relaxed mb-8">
+                                    If you would like to connect with me or learn
+                                    more about my projects, feel free to send me
+                                    a message.
+                                </p>
+
+
+                                <div className="space-y-4">
+
+                                    <div className="flex items-center gap-4">
+
+                                        <Icon
+                                            name="mail"
+                                            size={24}
+                                            className="text-cyan-400"
+                                        />
+
+                                        <span className="text-slate-300">
+                                            jayannrosemanzano@gmail.com
+                                        </span>
+
+                                    </div>
+
+
+                                    <div className="flex items-center gap-4">
+
+                                        <Icon
+                                            name="map-pin"
+                                            size={24}
+                                            className="text-cyan-400"
+                                        />
+
+                                        <span className="text-slate-300">
+                                            Philippines
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            {/* CONTACT FORM */}
+
+                            <form
+                                onSubmit={handleSubmit}
+                                className="space-y-5"
+                            >
+
+                                <div>
+
+                                    <label className="block text-sm font-medium mb-2">
+                                        Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-cyan-400"
+                                        placeholder="Your name"
+                                    />
+
+                                </div>
+
+
+                                <div>
+
+                                    <label className="block text-sm font-medium mb-2">
+                                        Email
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-cyan-400"
+                                        placeholder="Your email"
+                                    />
+
+                                </div>
+
+
+                                <div>
+
+                                    <label className="block text-sm font-medium mb-2">
+                                        Message
+                                    </label>
+
+                                    <textarea
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        required
+                                        rows="5"
+                                        className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-cyan-400 resize-none"
+                                        placeholder="Your message"
+                                    ></textarea>
+
+                                </div>
+
+
+                                <button
+                                    type="submit"
+                                    className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-bold rounded-lg transition"
+                                >
+                                    Send Message
+                                </button>
+
+
+                                {submitted && (
+
+                                    <p className="text-green-400 text-center">
+                                        Message submitted successfully!
+                                    </p>
+
+                                )}
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                {/* =========================
+                   FOOTER
+                ========================= */}
+
+                <footer className="py-8 px-6 border-t border-slate-800">
+
+                    <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+
+                        <p className="text-slate-500 text-sm">
+                            © 2026 Jay Ann Rose G. Manzano. All rights reserved.
+                        </p>
+
+
+                        <div className="flex items-center gap-4">
+
+                            <a
+                                href="https://github.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-slate-400 hover:text-cyan-400 transition"
+                            >
+
+                                <Icon
+                                    name="github"
+                                    size={22}
+                                />
+
+                            </a>
+
+
+                            <button
+                                onClick={() => scrollToSection("home")}
+                                className="text-slate-400 hover:text-cyan-400 transition"
+                            >
+
+                                <Icon
+                                    name="arrow-up"
+                                    size={22}
+                                />
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </footer>
+
+
+            </main>
+
+        </div>
+    );
+}
+
+
+/* =========================
+   RENDER APP
+========================= */
+
+const root = ReactDOM.createRoot(
+    document.getElementById("root")
+);
+
+root.render(<App />);
+
+</script>
+
+</body>
+</html>
